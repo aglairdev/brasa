@@ -1,0 +1,186 @@
+{
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "nav": {
+    "kanban": "Kanban",
+    "diary": "Diário"
+  },
+  "header": {
+    "settings": "Configurações",
+    "streak": "dia seguido",
+    "streaks": "dias seguidos"
+  },
+  "streak": {
+    "label": "dias seguidos",
+    "tooltip": "Dias consecutivos"
+  },
+  "player": {
+    "label": "Som ambiente",
+    "play": "Reproduzir",
+    "pause": "Pausar",
+    "volume": "Volume",
+    "tracks": {
+      "pinknoise": "Ruído rosa",
+      "brownnoise": "Ruído marrom",
+      "rain": "Chuva suave",
+      "forest": "Floresta",
+      "fire": "Lareira",
+      "cafe": "Café",
+      "birds":   "Pássaros",
+      "city":    "Cidade",
+      "creek":   "Riacho",
+      "night":   "Noite",
+      "ocean":   "Oceano",
+      "thunder": "Trovão",
+      "white":   "Ruído branco",
+      "wind":    "Vento"
+    }
+  },
+  "ambient": {
+    "title": "Som Ambiente"
+  },
+  "kanban": {
+    "title": "Kanban",
+    "add_task": "Nova tarefa",
+    "addTask": "Nova tarefa",
+    "addColumn": "Nova coluna",
+    "editTask": "Editar tarefa",
+    "priority": "Prioridade",
+    "priorityLow": "Baixa",
+    "priorityMedium": "Média",
+    "priorityHigh": "Alta",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "commits": "Commits",
+    "commitPlaceholder": "O que você fez nessa tarefa hoje?",
+    "commitAdd": "Registrar",
+    "noCommits": "Nenhum commit ainda.",
+    "taskTitlePlaceholder": "Título da tarefa...",
+    "taskDescPlaceholder": "Descrição (opcional)...",
+    "confirmDelete": "Remover esta tarefa?",
+    "confirmDeleteColumn": "Remover esta coluna?",
+    "filterAll": "Todas",
+    "filterLow": "Baixa",
+    "filterMedium": "Média",
+    "filterHigh": "Alta",
+    "columns": {
+      "todo": "A fazer",
+      "doing": "Fazendo",
+      "done": "Feito"
+    },
+    "priority_obj": {
+      "label": "Prioridade",
+      "high": "Alta",
+      "medium": "Média",
+      "low": "Baixa"
+    },
+    "empty": "Nenhuma tarefa aqui."
+  },
+  "diary": {
+    "title": "Diário",
+    "new_entry": "Nova entrada",
+    "mood": "Como você está?",
+    "moodLabel": "Como você está?",
+    "write_ph": "Escreva aqui...",
+    "textPlaceholder": "Escreva o que quiser. Não precisa fazer sentido.",
+    "save": "Salvar entrada",
+    "history": "Histórico",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "noEntries": "Nenhuma entrada ainda.",
+    "empty": "Nenhuma entrada ainda.",
+    "moods": {
+      "numb": "Entorpecido",
+      "sad": "Triste",
+      "anxious": "Ansioso",
+      "angry": "Com raiva",
+      "empty": "Vazio",
+      "okay": "Okay",
+      "calm": "Calmo",
+      "hopeful": "Esperançoso",
+      "content": "Satisfeito",
+      "happy": "Feliz",
+      "crying": "Chorando",
+      "vulnerable": "Vulnerável",
+      "tired": "Exausto",
+      "euphoric": "Eufórico"
+    },
+    "modal": {
+      "new_title": "Nova entrada",
+      "edit_title": "Editar entrada",
+      "cancel": "Cancelar",
+      "save": "Salvar",
+      "add": "Adicionar"
+    },
+    "commit": {
+      "title": "Comprometer-se",
+      "label": "Compromisso de hoje",
+      "ph": "O que você compromete fazer hoje?",
+      "cancel": "Cancelar",
+      "save": "Salvar compromisso"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "theme": "Aparência",
+    "soundEffects": "Sons de vitória",
+    "soundEffectsDesc": "Toca som ao concluir uma tarefa",
+    "ambientSound": "Som ambiente",
+    "ambientSoundDesc": "Ativa ou desativa o player de som ambiente",
+    "export": "Exportar dados (JSON)",
+    "import": "Importar dados (JSON)",
+    "clearData":    "Apagar todos os dados",
+    "clearConfirm": "Isso vai apagar tudo: tarefas, diário e sequência. Continuar?",
+    "importSuccess": "Dados importados com sucesso.",
+    "importError": "Erro ao importar. Verifique o arquivo.",
+    "sounds": {
+      "title": "Sons",
+      "victory": "Som de conclusão de tarefa",
+      "ambient": "Som ambiente habilitado"
+    },
+    "streak": {
+      "title": "Sequência",
+      "reset": "Reiniciar sequência",
+      "reset_confirm": "Tem certeza?"
+    },
+    "data": {
+      "title": "Dados",
+      "export": "Exportar dados",
+      "import": "Importar dados",
+      "clear": "Limpar tudo",
+      "clear_confirm": "Isso apagará todos os seus dados. Continuar?"
+    },
+    "close": "Fechar",
+    "save": "Salvar"
+  },
+  "a11y": {
+    "closeModal": "Fechar modal",
+    "openCommits": "Ver commits",
+    "editTask": "Editar tarefa",
+    "deleteTask": "Excluir tarefa"
+  },
+  "toast": {
+    "task_done": "Tarefa concluída.",
+    "task_added": "Tarefa adicionada.",
+    "task_edited": "Tarefa editada.",
+    "task_deleted": "Tarefa removida.",
+    "entry_saved": "Entrada salva.",
+    "entry_deleted": "Entrada removida.",
+    "commit_saved": "Compromisso registrado.",
+    "settings_saved": "Configurações salvas.",
+    "data_exported": "Dados exportados.",
+    "data_imported": "Dados importados.",
+    "data_cleared": "Dados apagados."
+  },
+  "confirm": {
+    "delete_task": "Remover esta tarefa?",
+    "delete_entry": "Remover esta entrada?",
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "footer": {
+    "phrase": "se sentir pequeno é libertador.",
+    "github": "GitHub"
+  }
+}
