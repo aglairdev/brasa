@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline'
+      https://fonts.googleapis.com;
+    font-src 'self'
+      https://fonts.gstatic.com;
+    connect-src 'self';
+    img-src 'self' data:;
+    media-src 'self';
+    frame-src 'none';
+    object-src 'none';
+  ">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Brasa - kanban e diário minimalista." />
+  <meta name="theme-color" content="#1a1a1a" />
+  <title>Brasa - kanban e diário minimalista.</title>
+  <link rel="stylesheet" href="libs/bootstrap.min.css" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="app-header" role="banner">
+    <div class="header-primary">
+      <h1 class="brand-name" id="brand-name">Brasa</h1>
+      <button class="icon-btn" id="btn-settings" aria-label="Configurações" title="Configurações">
+        <i class="bi bi-gear" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="header-secondary">
+      <nav class="app-nav" aria-label="Navegação principal">
+        <button class="nav-btn active" id="nav-kanban" data-section="kanban" data-i18n="nav.kanban">Kanban</button>
+        <button class="nav-btn" id="nav-diary" data-section="diary" data-i18n="nav.diary">Diário</button>
+      </nav>
+      <div class="ambient-bar" id="ambient-bar" role="region" aria-label="Player de som ambiente">
+        <button class="ambient-play-btn" id="ambient-play" aria-label="Tocar/Pausar som ambiente">
+          <i class="bi bi-play-fill" id="ambient-play-icon" aria-hidden="true"></i>
+        </button>
+        <span class="ambient-sound-name" id="ambient-sound-name">Chuva suave</span>
+        <input type="range" class="ambient-volume" id="ambient-volume" min="0" max="1" step="0.01" value="0.4"
+          aria-label="Volume do som ambiente" />
+        <button class="ambient-select-btn" id="ambient-select" aria-label="Escolher som ambiente">
+          <i class="bi bi-music-note-list" aria-hidden="true"></i>
+        </button>
+      </div>
+      <span class="streak-badge" id="streak-badge" title="">
+        <span id="streak-count">0</span>
+        <span class="streak-label" data-i18n="streak.label">dias seguidos</span>
+      </span>
+    </div>
+  </header>
+  <main class="app-main" id="app-main">
+    <!-- kanban -->
+    <section class="section-kanban" id="section-kanban" aria-label="Kanban">
+      <div class="kanban-toolbar">
+        <div class="priority-filters" role="group" aria-label="Filtrar por prioridade">
+          <button class="filter-btn active" data-filter="all" data-i18n="kanban.filterAll">Todas</button>
+          <button class="filter-btn" data-filter="low">
+            <span class="priority-dot dot-low"></span>
+            <span data-i18n="kanban.filterLow">Baixa</span>
+          </button>
+          <button class="filter-btn" data-filter="medium">
+            <span class="priority-dot dot-medium"></span>
+            <span data-i18n="kanban.filterMedium">Média</span>
+          </button>
+          <button class="filter-btn" data-filter="high">
+            <span class="priority-dot dot-high"></span>
+            <span data-i18n="kanban.filterHigh">Alta</span>
+          </button>
+        </div>
+        <button class="btn-add-column" id="btn-add-column" aria-label="Adicionar coluna">
+          <i class="bi bi-plus-lg" aria-hidden="true"></i>
+          <span data-i18n="kanban.addColumn">Nova Coluna</span>
+        </button>
+      </div>
+      <div class="kanban-board" id="kanban-board" role="list" aria-label="Board Kanban">
+      </div>
+    </section>
+    <!-- diário -->
+    <section class="section-diary hidden" id="section-diary" aria-label="Diário">
+      <div class="diary-container">
+        <div class="diary-form card-retro">
+          <h2 class="diary-form-title" data-i18n="diary.moodLabel">Como você está?</h2>
+          <div class="mood-picker" id="mood-picker" role="group" aria-label="Selecionar humor">
+          </div>
+          <textarea class="diary-textarea" id="diary-text" rows="4" data-i18n-placeholder="diary.textPlaceholder"
+            placeholder="Escreva o que quiser. Não precisa fazer sentido." aria-label="Texto do diário"></textarea>
+          <button class="btn-primary" id="btn-save-diary" data-i18n="diary.save">Salvar entrada</button>
+        </div>
+        <div class="diary-history" id="diary-history" aria-label="Histórico do diário">
+          <h2 class="history-title" data-i18n="diary.history">Histórico</h2>
+          <div id="diary-history-list">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-brand-name" id="footer-brand-name">Brasa</span>
+      </div>
+      <p class="footer-phrase" data-i18n="footer.phrase">Feito com paciência para dias difíceis.</p>
+      <a class="footer-github" href="https://github.com/aglairdev/brasa" target="_blank" rel="noopener noreferrer"
+        aria-label="GitHub do projeto Brasa (abre em nova aba)">
+        <i class="bi bi-github" aria-hidden="true"></i>
+        <span data-i18n="footer.github">GitHub</span>
+      </a>
+    </div>
+  </footer>
+  <!--  modais -->
+  <div class="modal-overlay hidden" id="modal-settings" role="dialog" aria-modal="true"
+    aria-labelledby="settings-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="settings-title" data-i18n="settings.title">Configurações</h2>
+        <button class="modal-close" id="close-settings" data-i18n-aria="a11y.closeModal" aria-label="Fechar modal">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-row">
+          <label class="setting-label" for="lang-select" data-i18n="settings.language">Idioma</label>
+          <select class="setting-select" id="lang-select">
+          </select>
+        </div>
+        <div class="setting-row">
+          <div>
+            <span class="setting-label" id="label-victory-sound" data-i18n="settings.soundEffects">Sons de
+              vitória</span>
+            <p class="setting-desc" id="desc-victory-sound" data-i18n="settings.soundEffectsDesc">Toca som ao concluir
+              uma tarefa</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-victory-sound" checked aria-labelledby="label-victory-sound"
+              aria-describedby="desc-victory-sound" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div>
+            <span class="setting-label" id="label-ambient-sound" data-i18n="settings.ambientSound">Som ambiente</span>
+            <p class="setting-desc" id="desc-ambient-sound" data-i18n="settings.ambientSoundDesc">Ativa ou desativa o
+              player de som ambiente</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-ambient-sound" checked aria-labelledby="label-ambient-sound"
+              aria-describedby="desc-ambient-sound" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <hr class="setting-divider" />
+        <div class="setting-row setting-row-col">
+          <button class="btn-secondary" id="btn-export" data-i18n="settings.export">
+            <i class="bi bi-download" aria-hidden="true"></i> Exportar dados (JSON)
+          </button>
+          <button class="btn-secondary" id="btn-import" data-i18n="settings.import">
+            <i class="bi bi-upload" aria-hidden="true"></i> Importar dados (JSON)
+          </button>
+          <input type="file" id="import-file-input" accept=".json" class="visually-hidden"
+            aria-label="Selecionar arquivo JSON para importar" />
+          <p class="import-feedback hidden" id="import-feedback" aria-live="polite"></p>
+          <hr class="setting-divider" />
+          <button class="btn btn-danger d-flex align-items-center justify-content-center gap-2 w-100"
+            id="btn-clear-data" data-i18n="settings.clearData">
+            <i class="bi bi-trash" aria-hidden="true"></i>
+            <span>Apagar todos os dados</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay hidden" id="modal-task-edit" role="dialog" aria-modal="true"
+    aria-labelledby="task-edit-modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="task-edit-modal-title" data-i18n="kanban.editTask">Editar Tarefa</h2>
+        <button class="modal-close" id="close-task-edit-modal" aria-label="Fechar modal">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="task-input-field" id="edit-task-title" placeholder="Título..."
+          aria-label="Título da tarefa" />
+        <textarea class="task-textarea-field" id="edit-task-desc" rows="2" placeholder="Descrição..."
+          aria-label="Descrição da tarefa"></textarea>
+        <div class="task-priority-row">
+          <span class="setting-label" data-i18n="kanban.priority">Prioridade</span>
+          <div class="priority-btns" role="group" aria-label="Prioridade">
+            <button class="priority-pick-btn" data-p="low">
+              <span class="priority-dot dot-low"></span>
+              <span data-i18n="kanban.priorityLow">Baixa</span>
+            </button>
+            <button class="priority-pick-btn" data-p="medium">
+              <span class="priority-dot dot-medium"></span>
+              <span data-i18n="kanban.priorityMedium">Média</span>
+            </button>
+            <button class="priority-pick-btn" data-p="high">
+              <span class="priority-dot dot-high"></span>
+              <span data-i18n="kanban.priorityHigh">Alta</span>
+            </button>
+          </div>
+        </div>
+        <div class="task-modal-actions">
+          <button class="btn-primary" id="btn-save-task-edit" data-i18n="kanban.save">Salvar</button>
+          <button class="btn-danger" id="btn-delete-task-modal" data-i18n="kanban.delete">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay hidden" id="modal-task-commit" role="dialog" aria-modal="true"
+    aria-labelledby="task-commit-modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="task-commit-modal-title" data-i18n="kanban.commits">Commits</h2>
+        <button class="modal-close" id="close-task-commit-modal" aria-label="Fechar modal">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="commits-list" id="commits-list">
+        </div>
+        <div class="commit-input-row">
+          <textarea class="commit-textarea" id="commit-input" rows="2" data-i18n-placeholder="kanban.commitPlaceholder"
+            placeholder="O que você fez nessa tarefa hoje?" aria-label="Novo commit"></textarea>
+          <button class="btn-primary btn-sm" id="btn-add-commit" data-i18n="kanban.commitAdd">Registrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay hidden" id="modal-add-task" role="dialog" aria-modal="true"
+    aria-labelledby="add-task-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="add-task-title" data-i18n="kanban.addTask">Nova Tarefa</h2>
+        <button class="modal-close" id="close-add-task" aria-label="Fechar modal">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="task-input-field" id="new-task-title"
+          data-i18n-placeholder="kanban.taskTitlePlaceholder" placeholder="Título da tarefa..."
+          aria-label="Título da nova tarefa" />
+        <textarea class="task-textarea-field" id="new-task-desc" rows="2"
+          data-i18n-placeholder="kanban.taskDescPlaceholder" placeholder="Descrição (opcional)..."
+          aria-label="Descrição da nova tarefa"></textarea>
+        <div class="task-priority-row">
+          <span class="setting-label" data-i18n="kanban.priority">Prioridade</span>
+          <div class="priority-btns" role="group" aria-label="Prioridade">
+            <button class="priority-pick-btn" data-p="low">
+              <span class="priority-dot dot-low"></span>
+              <span data-i18n="kanban.priorityLow">Baixa</span>
+            </button>
+            <button class="priority-pick-btn active" data-p="medium">
+              <span class="priority-dot dot-medium"></span>
+              <span data-i18n="kanban.priorityMedium">Média</span>
+            </button>
+            <button class="priority-pick-btn" data-p="high">
+              <span class="priority-dot dot-high"></span>
+              <span data-i18n="kanban.priorityHigh">Alta</span>
+            </button>
+          </div>
+        </div>
+        <button class="btn-primary" id="btn-confirm-add-task" data-i18n="kanban.addTask">Nova Tarefa</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay hidden" id="modal-ambient" role="dialog" aria-modal="true"
+    aria-labelledby="ambient-modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="ambient-modal-title" data-i18n="ambient.title">Som Ambiente</h2>
+        <button class="modal-close" id="close-ambient" aria-label="Fechar modal">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="ambient-list" id="ambient-list" role="list">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- animação ao concluir tarefa -->
+  <div class="victory-overlay hidden" id="victory-overlay" aria-live="assertive" aria-atomic="true">
+    <div class="victory-message" id="victory-message"></div>
+    <canvas class="confetti-canvas" id="confetti-canvas"></canvas>
+  </div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+  <script src="libs/bootstrap.bundle.min.js"></script>
+  <script src="security.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
